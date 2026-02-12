@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>❄️ Carregando... ❄️</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.fundo {
+    position: fixed;
+    inset: 0;
+    background-image: url("capa.jpg");
+    background-size: 160px;
+    background-repeat: repeat;
+    background-position: center;
+}
+
+.carregando {
+    position: absolute;
+    bottom: 45px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    text-shadow: 0 0 10px black;
+}
+
+.contador {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 13px;
+    opacity: 0.9;
+    text-shadow: 0 0 5px black;
+}
+
+@media (max-width: 768px) {
+    .fundo {
+        background-size: 110px;
+    }
+
+    .carregando {
+        font-size: 16px;
+        bottom: 40px;
+    }
+
+    .contador {
+        font-size: 11px;
+        bottom: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="fundo"></div>
+
+<div class="carregando">❄️ Carregando... ❄️</div>
+
+<div class="contador">
+    <span id="contador-numero">0</span>
+</div>
+
+<script>
+
+/* LETREIRO */
+let texto = " ❄️ Ar-Condicionado | Instalações Comerciais | Venda Especializada ❄️ ";
+let pos = 0;
+
+function moverTitulo() {
+    document.title = texto.substring(pos) + texto.substring(0, pos);
+    pos++;
+    if (pos > texto.length) pos = 0;
+}
+setInterval(moverTitulo, 150);
+
+
+/* ===== CONTADOR REAL QUE NUNCA ZERA ===== */
+function atualizarContador() {
+    fetch("https://api.countapi.xyz/hit/costa-oeste-unico/visitas")
+    .then(res => res.json())
+    .then(data => {
+        // data.value retorna o valor atualizado do último acesso
+        document.getElementById("contador-numero").textContent = data.value;
+        // armazenar no localStorage para fallback
+        localStorage.setItem("contador", data.value);
+    })
+    .catch(() => {
+        // fallback local caso a API dê erro
+        let contador = parseInt(localStorage.getItem("contador") || "0") + 1;
+        localStorage.setItem("contador", contador);
+        document.getElementById("contador-numero").textContent = contador;
+    });
+}
+
+// Atualiza contador ao carregar a página
+atualizarContador();
+
+
+/* REDIRECIONA */
+setTimeout(() => {
+    window.location.href = "index.html";
+}, 10000);
+
+</script>
+
+</body>
+</html>
