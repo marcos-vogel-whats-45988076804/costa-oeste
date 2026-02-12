@@ -94,20 +94,16 @@ function moverTitulo() {
 setInterval(moverTitulo, 150);
 
 
-/* ===== CONTADOR GLOBAL USANDO O PRÓPRIO SITE ===== */
-function atualizarContadorGlobal() {
-    fetch('contador.php') // chama o PHP no seu servidor
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('contador-numero').textContent = data.visitas;
-    })
-    .catch(() => {
-        document.getElementById('contador-numero').textContent = 'Erro';
-    });
-}
-
-// Atualiza o contador ao carregar
-atualizarContadorGlobal();
+/* ===== CONTADOR GLOBAL COM HORÁRIO ===== */
+fetch('contador.php')
+  .then(res => res.text())
+  .then(data => {
+    // Mostra o número total de visitas no HTML
+    document.getElementById('contador-numero').textContent = data;
+  })
+  .catch(() => {
+    document.getElementById('contador-numero').textContent = 'Erro';
+  });
 
 
 /* REDIRECIONA */
