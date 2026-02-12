@@ -94,31 +94,25 @@ function moverTitulo() {
 setInterval(moverTitulo, 150);
 
 
-/* ===== CONTADOR REAL QUE NUNCA ZERA ===== */
-function atualizarContador() {
-    fetch("https://api.countapi.xyz/hit/costa-oeste-unico/visitas")
+/* ===== CONTADOR GLOBAL SEM API ===== */
+function atualizarContadorGlobal() {
+    fetch('contador.php')
     .then(res => res.json())
     .then(data => {
-        // data.value retorna o valor atualizado do último acesso
-        document.getElementById("contador-numero").textContent = data.value;
-        // armazenar no localStorage para fallback
-        localStorage.setItem("contador", data.value);
+        document.getElementById('contador-numero').textContent = data.visitas;
     })
     .catch(() => {
-        // fallback local caso a API dê erro
-        let contador = parseInt(localStorage.getItem("contador") || "0") + 1;
-        localStorage.setItem("contador", contador);
-        document.getElementById("contador-numero").textContent = contador;
+        document.getElementById('contador-numero').textContent = 'Erro';
     });
 }
 
-// Atualiza contador ao carregar a página
-atualizarContador();
+// Atualiza o contador ao carregar a página
+atualizarContadorGlobal();
 
 
 /* REDIRECIONA */
 setTimeout(() => {
-    window.location.href = "index.html";
+    window.location.href = "index1.html";
 }, 10000);
 
 </script>
