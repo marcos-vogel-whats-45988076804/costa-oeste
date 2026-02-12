@@ -22,7 +22,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* FUNDO COMPLETO */
 .fundo {
     position: fixed;
     inset: 0;
@@ -32,7 +31,6 @@ body {
     background-position: center;
 }
 
-/* TEXTO CARREGANDO */
 .carregando {
     position: absolute;
     bottom: 45px;
@@ -43,7 +41,6 @@ body {
     text-shadow: 0 0 10px black;
 }
 
-/* CONTADOR PEQUENO */
 .contador {
     position: absolute;
     bottom: 20px;
@@ -51,11 +48,10 @@ body {
     text-align: center;
     color: white;
     font-size: 13px;
-    opacity: 0.8;
+    opacity: 0.9;
     text-shadow: 0 0 5px black;
 }
 
-/* AJUSTE PARA CELULAR */
 @media (max-width: 768px) {
     .fundo {
         background-size: 110px;
@@ -72,8 +68,8 @@ body {
     }
 }
 </style>
-
 </head>
+
 <body>
 
 <div class="fundo"></div>
@@ -81,11 +77,12 @@ body {
 <div class="carregando">❄️ Carregando... ❄️</div>
 
 <div class="contador">
-    Visitantes: <span id="contador-numero">Carregando...</span>
+    <span id="contador-numero">0</span>
 </div>
 
 <script>
-/* LETREIRO CORRENDO */
+
+/* LETREIRO */
 let texto = " ❄️ Ar-Condicionado | Instalações Comerciais | Venda Especializada ❄️ ";
 let pos = 0;
 
@@ -96,20 +93,23 @@ function moverTitulo() {
 }
 setInterval(moverTitulo, 150);
 
-/* CONTADOR REAL ONLINE */
-fetch('https://api.countapi.xyz/hit/costa-oeste-site/visitas')
-.then(response => response.json())
+
+/* ===== CONTADOR REAL FUNCIONANDO ===== */
+fetch("https://api.countapi.xyz/hit/costa-oeste-unico/visitas")
+.then(res => res.json())
 .then(data => {
-    document.getElementById("contador-numero").innerText = data.value;
+    document.getElementById("contador-numero").textContent = data.value;
 })
 .catch(() => {
-    document.getElementById("contador-numero").innerText = "Indisponível";
+    document.getElementById("contador-numero").textContent = "1";
 });
 
-/* REDIRECIONA APÓS 10 SEGUNDOS */
-setTimeout(function() {
+
+/* REDIRECIONA */
+setTimeout(() => {
     window.location.href = "index1.html";
 }, 10000);
+
 </script>
 
 </body>
