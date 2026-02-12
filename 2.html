@@ -94,9 +94,9 @@ function moverTitulo() {
 setInterval(moverTitulo, 150);
 
 
-/* ===== CONTADOR GLOBAL SEM API ===== */
+/* ===== CONTADOR GLOBAL USANDO O PRÓPRIO SITE ===== */
 function atualizarContadorGlobal() {
-    fetch('contador.php')
+    fetch('contador.php') // chama o PHP no seu servidor
     .then(res => res.json())
     .then(data => {
         document.getElementById('contador-numero').textContent = data.visitas;
@@ -106,7 +106,7 @@ function atualizarContadorGlobal() {
     });
 }
 
-// Atualiza o contador ao carregar a página
+// Atualiza o contador ao carregar
 atualizarContadorGlobal();
 
 
