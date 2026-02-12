@@ -1,33 +1,37 @@
 <?php
 $file = 'contador.txt';
 
-// Lê o contador atual
-$contador = 0;
-if (file_exists($file)) {
-    $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    if (count($lines) > 0) {
-        $contador = (int)$lines[0]; // a primeira linha é o número de visitas
-    }
+// Se o arquivo não existir, cria com 0
+if (!file_exists($file)) {
+    file_put_contents($file, "0\n");
 }
+
+// Lê todas as linhas
+$lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+// Primeiro linha é o número de visitas
+$contador = isset($lines[0]) ? (int)$lines[0] : 0;
 
 // Incrementa
 $contador++;
 
-// Pega a data e hora do acesso
+// Data e hora do acesso
 $hora = date("Y-m-d H:i:s");
 
-// Prepara o conteúdo para salvar
-$content = $contador . "\n"; // primeira linha é o número total de visitas
+// Prepara novo conteúdo
+$content = $contador . "\n"; // primeira linha = total de visitas
 
-// Adiciona o registro do acesso (data e hora) nas linhas seguintes
+// Mantém registros antigos
 for ($i = 1; $i < count($lines); $i++) {
-    $content .= $lines[$i] . "\n"; // mantém os acessos antigos
+    $content .= $lines[$i] . "\n";
 }
+
+// Adiciona registro do acesso atual
 $content .= "Visita $contador em $hora\n";
 
-// Salva de volta no arquivo
+// Salva de volta no contador.txt
 file_put_contents($file, $content);
 
-// Retorna o contador para mostrar no site
+// Retorna o total de visitas
 echo $contador;
 ?>
