@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Contador Estilo GIF</title>
+<style>
+body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+.contador { font-size: 24px; margin-top: 20px; }
+.ultimo { font-size: 14px; color: gray; }
+</style>
+</head>
+<body>
+
+<h1>Bem-vindo ao site!</h1>
+
+<!-- Contador -->
+<div class="contador">
+  Visitas neste navegador: <span id="contador-numero">0</span>
+</div>
+
+<div class="ultimo">
+  Última visita: <span id="ultimo-acesso">Nunca</span>
+</div>
+
+<script>
+// Pega contador do navegador ou inicia em 0
+let contador = parseInt(localStorage.getItem("contador") || "0");
+contador++; // incrementa a cada visita
+localStorage.setItem("contador", contador);
+
+// Pega data e hora atual
+let hora = new Date().toLocaleString();
+localStorage.setItem("ultimo_acesso", hora);
+
+// Atualiza a tela
+document.getElementById("contador-numero").textContent = contador;
+document.getElementById("ultimo-acesso").textContent = hora;
+</script>
+
+</body>
+</html>
+
